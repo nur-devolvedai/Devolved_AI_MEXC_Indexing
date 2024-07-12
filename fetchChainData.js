@@ -12,7 +12,7 @@ const pool = new Pool({
 
 const RETRY_LIMIT = 5;
 const RETRY_DELAY = 5000; // 5 seconds
-const BATCH_SIZE = 100; // Number of blocks to process in a batch
+const BATCH_SIZE = 1000; // Number of blocks to process in a batch
 
 const main = async () => {
   try {
@@ -109,7 +109,7 @@ const processBlock = async (api, blockNumber) => {
   signedBlock.block.extrinsics.forEach((extrinsic, index) => {
     const { isSigned, meta, method: { method, section }, args, signer, hash } = extrinsic;
 
-    if (isSigned && section === 'balances' && method === 'transfer') {
+    if (isSigned && section === 'balances' && method === 'Transfer') {
       const [to, amount] = args;
       const tip = meta.isSome ? meta.unwrap().tip.toString() : '0';
 
@@ -151,6 +151,12 @@ const processBlock = async (api, blockNumber) => {
 
 const updateAccountBalance = async (api, address) => {
   try {
+    // Check if the address is of the correct length (32 bytes)
+    if (address.length !== 48) { // 48 characters for hex representation of 32 bytes
+      // throw new Error(`Invalid AccountId provided, expected 32 bytes, found ${address.length / 2} bytes`);
+      console.error(`Invalid AccountId provided, expected 32 bytes, found ${address.length / 2} bytes`);
+    }
+
     const { data: { free: balance } } = await api.query.system.account(address);
 
     await pool.query(
