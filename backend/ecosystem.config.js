@@ -3,6 +3,7 @@ module.exports = {
       {
         name: 'fetchChainData',
         script: 'fetchChainData.js',
+        node_args: '--max-old-space-size=2048',
         watch: false,
         autorestart: true,
         max_restarts: 10,

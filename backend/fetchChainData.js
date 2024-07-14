@@ -16,7 +16,7 @@ const pool = new Pool({
 
 const RETRY_LIMIT = 5; // Number of retries for block processing
 const RETRY_DELAY = 5000; // Delay between retries (in milliseconds)
-const BATCH_SIZE = process.env.FETCHING_BATCH_SIZE; // Number of blocks to process in a batch
+const BATCH_SIZE = parseInt(process.env.FETCHING_BATCH_SIZE, 10); // Number of blocks to process in a batch
 
 const main = async () => {
   try {
