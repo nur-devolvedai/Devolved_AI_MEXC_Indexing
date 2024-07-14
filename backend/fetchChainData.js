@@ -3,35 +3,32 @@ const { Pool } = require('pg');
 const fs = require('fs');
 require('dotenv').config();
 
+// Initialize WebSocket provider for the Substrate node
 const wsProvider = new WsProvider(process.env.ARGOCHAIN_RPC_URL);
+
+// Initialize PostgreSQL connection pool
 const pool = new Pool({
   user: process.env.POSTGRES_USER,
   database: process.env.POSTGRES_DB,
-  password: process.env.POSTGRES_PASSWORD
+  password: process.env.POSTGRES_PASSWORD,
+  port: process.env.POSTGRES_PORT
 });
 
-const RETRY_LIMIT = 5;
-const RETRY_DELAY = 5000; // 5 seconds
-const BATCH_SIZE = 1000; // Number of blocks to process in a batch
+const RETRY_LIMIT = 5; // Number of retries for block processing
+const RETRY_DELAY = 5000; // Delay between retries (in milliseconds)
+const BATCH_SIZE = process.env.FETCHING_BATCH_SIZE; // Number of blocks to process in a batch
 
 const main = async () => {
   try {
+    // Create API instance
     const api = await ApiPromise.create({ provider: wsProvider });
-
-    // Fetch and store metadata
-    const metadata = await api.rpc.state.getMetadata();
-    await pool.query(
-      'INSERT INTO metadata (data) VALUES ($1) ON CONFLICT DO NOTHING',
-      [JSON.stringify(metadata.toHuman())]
-    );
-    console.log('Metadata stored.');
 
     // Get the latest block number
     const latestHeader = await api.rpc.chain.getHeader();
     const latestBlockNumber = latestHeader.number.toNumber();
     console.log(`Latest block number: ${latestBlockNumber}`);
 
-    // Load last processed block number if exists
+    // Load last processed block number if it exists
     let startBlockNumber = 0;
     if (fs.existsSync('lastProcessedBlock.txt')) {
       startBlockNumber = parseInt(fs.readFileSync('lastProcessedBlock.txt', 'utf8'), 10) + 1;
@@ -53,6 +50,7 @@ const main = async () => {
   }
 };
 
+// Process a batch of blocks
 const processBlockBatch = async (api, startBlockNumber, endBlockNumber) => {
   const blockNumbers = [];
   for (let blockNumber = startBlockNumber; blockNumber <= endBlockNumber; blockNumber++) {
@@ -63,6 +61,7 @@ const processBlockBatch = async (api, startBlockNumber, endBlockNumber) => {
   await Promise.all(blockPromises);
 };
 
+// Retry processing a block up to the RETRY_LIMIT
 const processBlockWithRetries = async (api, blockNumber) => {
   let retries = 0;
   while (retries < RETRY_LIMIT) {
@@ -84,6 +83,7 @@ const processBlockWithRetries = async (api, blockNumber) => {
   }
 };
 
+// Process a single block
 const processBlock = async (api, blockNumber) => {
   const blockHash = await api.rpc.chain.getBlockHash(blockNumber);
   const signedBlock = await api.rpc.chain.getBlock(blockHash);
@@ -104,22 +104,34 @@ const processBlock = async (api, blockNumber) => {
   ];
   await pool.query(blockInsertQuery, blockValues);
 
-  // Process extrinsics
+  // Process extrinsics (transactions) within the block
   const transactionQueries = [];
   signedBlock.block.extrinsics.forEach((extrinsic, index) => {
     const { isSigned, meta, method: { method, section }, args, signer, hash } = extrinsic;
+
+    let gasFee = '0'; // Default gas fee to 0
 
     if (isSigned && section === 'balances' && method === 'Transfer') {
       const [to, amount] = args;
       const tip = meta.isSome ? meta.unwrap().tip.toString() : '0';
 
+      // Check for Withdraw event within the block events to capture the gas fee
+      blockEvents.forEach(({ event }) => {
+        if (event.section === 'balances' && event.method === 'Withdraw') {
+          const [who, fee] = event.data;
+          if (who.toString() === signer.toString()) {
+            gasFee = fee.toString();
+          }
+        }
+      });
+
       transactionQueries.push({
         text: `
-          INSERT INTO transactions (hash, block_number, from_address, to_address, amount, fee)
-          VALUES ($1, $2, $3, $4, $5, $6)
+          INSERT INTO transactions (hash, block_number, from_address, to_address, amount, tip, gas_fee)
+          VALUES ($1, $2, $3, $4, $5, $6, $7)
           ON CONFLICT DO NOTHING
         `,
-        values: [hash.toHex(), blockNumber, signer.toString(), to.toString(), amount.toString(), tip]
+        values: [hash.toHex(), blockNumber, signer.toString(), to.toString(), amount.toString(), tip, gasFee]
       });
 
       updateAccountBalance(api, signer.toString());
@@ -149,12 +161,13 @@ const processBlock = async (api, blockNumber) => {
   }
 };
 
+// Update account balance for a given address
 const updateAccountBalance = async (api, address) => {
   try {
     // Check if the address is of the correct length (32 bytes)
     if (address.length !== 48) { // 48 characters for hex representation of 32 bytes
-      // throw new Error(`Invalid AccountId provided, expected 32 bytes, found ${address.length / 2} bytes`);
       console.error(`Invalid AccountId provided, expected 32 bytes, found ${address.length / 2} bytes`);
+      return;
     }
 
     const { data: { free: balance } } = await api.query.system.account(address);
@@ -168,6 +181,7 @@ const updateAccountBalance = async (api, address) => {
   }
 };
 
+// Fetch and store all accounts and their balances
 const fetchAndStoreAllAccounts = async (api) => {
   try {
     const accounts = await api.query.system.account.entries();
@@ -191,4 +205,5 @@ const fetchAndStoreAllAccounts = async (api) => {
   }
 };
 
+// Start the main process
 main().catch(console.error);

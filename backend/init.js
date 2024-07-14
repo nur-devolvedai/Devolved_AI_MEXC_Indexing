@@ -38,7 +38,8 @@ const createTables = async () => {
       from_address TEXT,
       to_address TEXT,
       amount TEXT,
-      fee TEXT
+      tip TEXT,
+      gas_fee TEXT
     );
 
     CREATE INDEX IF NOT EXISTS idx_transactions_block_number ON transactions(block_number);
@@ -51,12 +52,6 @@ const createTables = async () => {
     );
 
     CREATE INDEX IF NOT EXISTS idx_accounts_balance ON accounts(balance);
-
-    CREATE TABLE IF NOT EXISTS metadata (
-      id SERIAL PRIMARY KEY,
-      data JSONB NOT NULL,
-      timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    );
   `);
 
   client.end();
