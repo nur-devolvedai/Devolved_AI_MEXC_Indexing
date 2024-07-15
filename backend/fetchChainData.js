@@ -16,7 +16,7 @@ const pool = new Pool({
 
 const RETRY_LIMIT = 5; // Number of retries for block processing
 const RETRY_DELAY = 5000; // Delay between retries (in milliseconds)
-const BATCH_SIZE = parseInt(process.env.FETCHING_BATCH_SIZE, 10); // Number of blocks to process in a batch
+const BATCH_SIZE = parseInt(process.env.FETCHING_BATCH_SIZE || '10', 10); // Number of blocks to process in a batch
 
 const main = async () => {
   try {
@@ -85,79 +85,103 @@ const processBlockWithRetries = async (api, blockNumber) => {
 
 // Process a single block
 const processBlock = async (api, blockNumber) => {
-  const blockHash = await api.rpc.chain.getBlockHash(blockNumber);
-  const signedBlock = await api.rpc.chain.getBlock(blockHash);
-  const blockEvents = await api.query.system.events.at(blockHash);
+  const blockInsertData = [];
+  const transactionInsertData = [];
 
-  // Store block details
-  const blockInsertQuery = `
-    INSERT INTO blocks (number, hash, parent_hash, state_root, extrinsics_root)
-    VALUES ($1, $2, $3, $4, $5)
-    ON CONFLICT DO NOTHING
-  `;
-  const blockValues = [
-    blockNumber,
-    blockHash.toHex(),
-    signedBlock.block.header.parentHash.toHex(),
-    signedBlock.block.header.stateRoot.toHex(),
-    signedBlock.block.header.extrinsicsRoot.toHex()
-  ];
-  await pool.query(blockInsertQuery, blockValues);
+  const hash = await api.rpc.chain.getBlockHash(blockNumber);
+  const signedBlock = await api.rpc.chain.getBlock(hash);
+  const blockNum = signedBlock.block.header.number.toNumber();
 
-  // Process extrinsics (transactions) within the block
-  const transactionQueries = [];
-  signedBlock.block.extrinsics.forEach((extrinsic, index) => {
+  const blockHash = signedBlock.block.header.hash.toHex();
+  const parentHash = signedBlock.block.header.parentHash.toHex();
+  const stateRoot = signedBlock.block.header.stateRoot.toHex();
+  const extrinsicsRoot = signedBlock.block.header.extrinsicsRoot.toHex();
+  const timestamp = new Date();
+
+  // Accumulate block data
+  blockInsertData.push([blockNum, blockHash, parentHash, stateRoot, extrinsicsRoot, timestamp]);
+
+  const allEvents = await api.query.system.events.at(signedBlock.block.header.hash);
+  const transactions = [];
+
+  for (const [extrinsicIndex, extrinsic] of signedBlock.block.extrinsics.entries()) {
     const { isSigned, meta, method: { method, section }, args, signer, hash } = extrinsic;
 
-    let gasFee = '0'; // Default gas fee to 0
-
-    if (isSigned && section === 'balances' && method === 'Transfer') {
+    if (isSigned && section === 'balances' && (method === 'transfer' || method === 'transferKeepAlive')) {
       const [to, amount] = args;
       const tip = meta.isSome ? meta.unwrap().tip.toString() : '0';
 
-      // Check for Withdraw event within the block events to capture the gas fee
-      blockEvents.forEach(({ event }) => {
+      let gasFee = '0';
+      const extrinsicEvents = allEvents.filter(
+        ({ phase }) => phase.isApplyExtrinsic && phase.asApplyExtrinsic.eq(extrinsicIndex)
+      );
+
+      const events = extrinsicEvents.map(({ event }) => ({
+        section: event.section,
+        method: event.method,
+        data: event.data.map((data) => data.toString()),
+      }));
+
+      for (const { event } of extrinsicEvents) {
         if (event.section === 'balances' && event.method === 'Withdraw') {
-          const [who, fee] = event.data;
-          if (who.toString() === signer.toString()) {
-            gasFee = fee.toString();
-          }
+          gasFee = event.data[1].toString();
         }
-      });
+      }
 
-      transactionQueries.push({
-        text: `
-          INSERT INTO transactions (hash, block_number, from_address, to_address, amount, tip, gas_fee)
-          VALUES ($1, $2, $3, $4, $5, $6, $7)
-          ON CONFLICT DO NOTHING
-        `,
-        values: [hash.toHex(), blockNumber, signer.toString(), to.toString(), amount.toString(), tip, gasFee]
+      transactions.push({
+        extrinsic_index: extrinsicIndex,
+        hash: hash.toHex(),
+        block_number: blockNum,
+        from_address: signer.toString(),
+        to_address: to.toString(),
+        amount: amount.toString(),
+        fee: tip,
+        gas_fee: gasFee,
+        gas_value: '0', // Assuming gas value is not available
+        method: `${section}.${method}`,
+        events: events.filter(
+          (event) =>
+            (event.section === 'balances' && event.method === 'Transfer') ||
+            (event.section === 'balances' && event.method === 'Withdraw')
+        ),
       });
-
-      updateAccountBalance(api, signer.toString());
-      updateAccountBalance(api, to.toString());
     }
-  });
-
-  if (transactionQueries.length > 0) {
-    await Promise.all(transactionQueries.map(query => pool.query(query)));
   }
 
-  // Store events
-  const eventQueries = blockEvents.map(({ event, phase }) => {
-    const { section, method, data } = event;
-    return {
-      text: `
-        INSERT INTO events (block_number, section, method, data)
-        VALUES ($1, $2, $3, $4)
-        ON CONFLICT DO NOTHING
-      `,
-      values: [blockNumber, section, method, JSON.stringify(data.map(d => d.toString()))]
-    };
-  });
+  // Accumulate transaction data
+  for (const transaction of transactions) {
+    transactionInsertData.push([
+      transaction.hash,
+      transaction.block_number,
+      transaction.from_address,
+      transaction.to_address,
+      transaction.amount,
+      transaction.fee,
+      transaction.gas_fee,
+      transaction.gas_value,
+      transaction.method,
+      JSON.stringify(transaction.events),
+    ]);
+  }
 
-  if (eventQueries.length > 0) {
-    await Promise.all(eventQueries.map(query => pool.query(query)));
+  // Perform bulk insert for blocks
+  if (blockInsertData.length > 0) {
+    const blockQuery = `
+      INSERT INTO blocks (block_number, block_hash, parent_hash, state_root, extrinsics_root, timestamp)
+      VALUES ${blockInsertData.map((_, i) => `($${i * 6 + 1}, $${i * 6 + 2}, $${i * 6 + 3}, $${i * 6 + 4}, $${i * 6 + 5}, $${i * 6 + 6})`).join(', ')}
+      ON CONFLICT (block_number) DO NOTHING;
+    `;
+    await pool.query(blockQuery, blockInsertData.flat());
+  }
+
+  // Perform bulk insert for transactions
+  if (transactionInsertData.length > 0) {
+    const transactionQuery = `
+      INSERT INTO transactions (tx_hash, block_number, from_address, to_address, amount, fee, gas_fee, gas_value, method, events)
+      VALUES ${transactionInsertData.map((_, i) => `($${i * 10 + 1}, $${i * 10 + 2}, $${i * 10 + 3}, $${i * 10 + 4}, $${i * 10 + 5}, $${i * 10 + 6}, $${i * 10 + 7}, $${i * 10 + 8}, $${i * 10 + 9}, $${i * 10 + 10})`).join(', ')}
+      ON CONFLICT (tx_hash) DO NOTHING;
+    `;
+    await pool.query(transactionQuery, transactionInsertData.flat());
   }
 };
 
