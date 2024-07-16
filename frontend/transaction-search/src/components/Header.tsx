@@ -22,7 +22,7 @@ const Header: React.FC = () => {
         {/* Logo */}
         <div className="flex items-center">
           <Image src="/headerLogo.jpg" alt="Logo" width={60} height={60} className="h-8 w-8 sm:h-16 sm:w-16" />
-          <span className="ml-2 mr-8 text-xl font-bold">Mexcindexing</span>
+          <span className="ml-2 mr-8 text-xl font-bold">Argochain Indexing</span>
         </div>
 
         {/* Navigation Links */}
