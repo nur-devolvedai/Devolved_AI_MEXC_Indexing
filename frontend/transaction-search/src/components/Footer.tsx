@@ -26,16 +26,16 @@ const Footer: React.FC = () => {
             <h3 className="text-lg font-semibold text-gray-700 mb-4">Navigation</h3>
             <nav className="space-y-2">
               <Link href="/">
-                <samp className="hover:text-blue-400 mr-2">Home</samp>
+                <samp className="hover:text-[#D91A9C] mr-2">Home</samp>
               </Link>
               <Link href="/blocks">
-                <samp className="hover:text-blue-400 mx-2">Blocks</samp>
+                <samp className="hover:text-[#D91A9C] mx-2">Blocks</samp>
               </Link>
               <Link href="/transactions">
-                <samp className="hover:text-blue-400 mx-2">Transactions</samp>
+                <samp className="hover:text-[#D91A9C] mx-2">Transactions</samp>
               </Link>
               <Link href="/tokens">
-                <samp className="hover:text-blue-400 mx-2">Tokens</samp>
+                <samp className="hover:text-[#D91A9C] mx-2">Tokens</samp>
               </Link>
               
             </nav>
