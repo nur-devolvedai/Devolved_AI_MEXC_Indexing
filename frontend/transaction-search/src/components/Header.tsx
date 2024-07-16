@@ -28,19 +28,19 @@ const Header: React.FC = () => {
         {/* Navigation Links */}
         <nav className="hidden md:flex space-x-4">
           <Link href="/">
-            <samp className="text-gray-700 hover:text-blue-600">Home</samp>
+            <samp className="text-gray-700 hover:text-[#D91A9C]">Home</samp>
           </Link>
           <Link href="/blocks">
-            <samp className="text-gray-700 hover:text-blue-600">Blocks</samp>
+            <samp className="text-gray-700 hover:text-[#D91A9C]">Blocks</samp>
           </Link>
           <Link href="/transactions">
-            <samp className="text-gray-700 hover:text-blue-600">Transactions</samp>
+            <samp className="text-gray-700 hover:text-[#D91A9C]">Transactions</samp>
           </Link>
           <Link href="/tokens">
-            <samp className="text-gray-700 hover:text-blue-600">Tokens</samp>
+            <samp className="text-gray-700 hover:text-[#D91A9C]">Tokens</samp>
           </Link>
           <Link href="/contracts">
-            <samp className="text-gray-700 hover:text-blue-600">Contracts</samp>
+            <samp className="text-gray-700 hover:text-[#D91A9C]">Contracts</samp>
           </Link>
         </nav>
 
@@ -49,17 +49,17 @@ const Header: React.FC = () => {
           <input
             type="text"
             placeholder="Search by Address / Txn Hash / Block / Token"
-            className="w-full px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-600"
+            className="w-full px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[#D91A9C]"
           />
         </div>
 
         {/* User Account Options */}
         <div className="hidden md:flex items-center space-x-4">
           <Link href="/signin">
-            <samp className="text-gray-700 hover:text-blue-600">Sign In</samp>
+            <samp className="text-gray-700 hover:text-[#D91A9C]">Sign In</samp>
           </Link>
           <Link href="/register">
-            <samp className="bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700">Register</samp>
+            <samp className="bg-[#D91A9C] text-white px-4 py-2 rounded-full hover:bg-[#e332ab]">Register</samp>
           </Link>
         </div>
 

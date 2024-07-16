@@ -26,9 +26,9 @@ const BlockDetails = ({ blockId }: any) => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search by Address / Txn Hash / Block / Token"
-            className="w-full lg:w-[750px] px-4 py-2 border border-gray-300 rounded-l-md h-20 focus:outline-none focus:ring-1"
+            className="w-full lg:w-[750px] px-4 py-2 border border-gray-300 rounded-l-md h-20 focus:outline-none focus:ring-[#D91A9C]"
           />
-          <button type="submit" className="px-4 py-2 h-20 bg-blue-500 text-white rounded-r-full hover:bg-blue-600">
+          <button type="submit" className="px-4 py-2 h-20 bg-[#D91A9C] text-white rounded-r-full hover:bg-[#e332ab]">
             Search
           </button>
         </form>
