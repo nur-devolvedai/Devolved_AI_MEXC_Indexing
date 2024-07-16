@@ -30,16 +30,16 @@ const Header: React.FC = () => {
           <Link href="/">
             <samp className="text-gray-700 hover:text-[#D91A9C]">Home</samp>
           </Link>
-          <Link href="/blocks">
+          <Link href="/#blocks">
             <samp className="text-gray-700 hover:text-[#D91A9C]">Blocks</samp>
           </Link>
-          <Link href="/transactions">
+          <Link href="/#transactions">
             <samp className="text-gray-700 hover:text-[#D91A9C]">Transactions</samp>
           </Link>
-          <Link href="/tokens">
+          <Link href="/#tokens">
             <samp className="text-gray-700 hover:text-[#D91A9C]">Tokens</samp>
           </Link>
-          <Link href="/contracts">
+          <Link href="/#contracts">
             <samp className="text-gray-700 hover:text-[#D91A9C]">Contracts</samp>
           </Link>
         </nav>
@@ -55,10 +55,10 @@ const Header: React.FC = () => {
 
         {/* User Account Options */}
         <div className="hidden md:flex items-center space-x-4">
-          <Link href="/signin">
+          <Link href="/#signin">
             <samp className="text-gray-700 hover:text-[#D91A9C]">Sign In</samp>
           </Link>
-          <Link href="/register">
+          <Link href="/#register">
             <samp className="bg-[#D91A9C] text-white px-4 py-2 rounded-full hover:bg-[#e332ab]">Register</samp>
           </Link>
         </div>
@@ -91,22 +91,22 @@ const Header: React.FC = () => {
             <Link href="/">
               <samp onClick={handleNavLinkClick} className="block text-gray-700 hover:bg-gray-200 px-3 py-2 rounded-md">Home</samp>
             </Link>
-            <Link href="/blocks">
+            <Link href="/#blocks">
               <samp onClick={handleNavLinkClick} className="block text-gray-700 hover:bg-gray-200 px-3 py-2 rounded-md">Blocks</samp>
             </Link>
-            <Link href="/transactions">
+            <Link href="/#transactions">
               <samp onClick={handleNavLinkClick} className="block text-gray-700 hover:bg-gray-200 px-3 py-2 rounded-md">Transactions</samp>
             </Link>
-            <Link href="/tokens">
+            <Link href="/#tokens">
               <samp onClick={handleNavLinkClick} className="block text-gray-700 hover:bg-gray-200 px-3 py-2 rounded-md">Tokens</samp>
             </Link>
-            <Link href="/contracts">
+            <Link href="/#contracts">
               <samp onClick={handleNavLinkClick} className="block text-gray-700 hover:bg-gray-200 px-3 py-2 rounded-md">Contracts</samp>
             </Link>
-            <Link href="/signin">
+            <Link href="/#signin">
               <samp onClick={handleNavLinkClick} className="block text-gray-700 hover:bg-gray-200 px-3 py-2 rounded-md">Sign In</samp>
             </Link>
-            <Link href="/register">
+            <Link href="/#register">
               <samp onClick={handleNavLinkClick} className="block text-gray-700 hover:bg-gray-200 px-3 py-2 rounded-md">Register</samp>
             </Link>
           </nav>
