@@ -44,10 +44,10 @@ const BlockDetails = ({ blockId }: any) => {
       <div className="mt-6">
         <div className="bg-white shadow-md rounded-lg p-4">
           <h2 className="text-lg sm:text-xl font-medium mb-4">Block Summary</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
             <div className="flex justify-between">
               <span className="font-semibold">Block Height:</span>
-              <span>{blockId}</span>
+              <span>59416842</span>
             </div>
             <div className="flex justify-between">
               <span className="font-semibold">Timestamp:</span>
@@ -58,12 +58,40 @@ const BlockDetails = ({ blockId }: any) => {
               <span>120</span>
             </div>
             <div className="flex justify-between">
-              <span className="font-semibold">Mined by:</span>
-              <span>Miner123</span>
+              <span className="font-semibold">Validated By:</span>
+              <span>0x98c27cc3f0301b6272049dc3f972e2f542780629  in 2 secs</span>
             </div>
             <div className="flex justify-between">
               <span className="font-semibold">Block Reward:</span>
-              <span>2.5 ETH</span>
+              <span>0.435011236776889237 MATIC</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="font-semibold">Difficulty:</span>
+              <span>23</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="font-semibold">Total Difficulty:</span>
+              <span>1,103,543,208</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="font-semibold">Size:</span>
+              <span>57,659 bytes</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="font-semibold">Gas Used:</span>
+              <span>10,761,180(35.87%)</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="font-semibold">Gas Limit:</span>
+              <span>30,000,000</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="font-semibold">Base Fee Per Gas:</span>
+              <span>0.000000000448958959 MATIC (0.448958959 Gwei)</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="font-semibold">Burnt Fees:</span>
+              <span>0.00483132817041162 MATIC</span>
             </div>
           </div>
         </div>
