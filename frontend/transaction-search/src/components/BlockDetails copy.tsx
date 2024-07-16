@@ -1,46 +1,14 @@
-"use client"
+// app/block/[blockId].js
+import React from 'react';
 
-// app/block/[blockId].tsx
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
-
-const BlockDetails = ({ blockId }: any) => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const router = useRouter();
-
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (searchQuery) {
-      router.push(`/search?query=${searchQuery}`);
-    }
-  };
-
+const BlockDetails = ({ blockId }:any) => {
   return (
-    <div className="container mx-auto p-4 sm:p-6 lg:p-8">
-      
-      {/* Centered Search Section */}
-      <div className="flex justify-center items-center mb-4">
-        <form onSubmit={handleSearch} className="w-full sm:w-auto flex items-center justify-center">
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search by Address / Txn Hash / Block / Token"
-            className="w-full lg:w-[750px] px-4 py-2 border border-gray-300 rounded-l-md h-20 focus:outline-none focus:ring-1"
-          />
-          <button type="submit" className="px-4 py-2 h-20 bg-blue-500 text-white rounded-r-full hover:bg-blue-600">
-            Search
-          </button>
-        </form>
-      </div>
-      <div className="flex flex-col sm:flex-row justify-between items-center py-4 border-b">
-        <div className="w-full sm:w-auto flex items-center mb-4 sm:mb-0">
-          <h1 className="text-xl sm:text-2xl font-semibold">Block #{blockId}</h1>
-        </div>
-        
-      </div>
+    <div className="p-4 sm:p-6 lg:p-8">
+      <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center py-4 border-b">
+        <h1 className="text-xl sm:text-2xl font-semibold">Block #{blockId}</h1>
+        <button className="mt-2 sm:mt-0 bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600">Back to Blocks</button>
+      </header>
 
-      {/* Block Details */}
       <div className="mt-6">
         <div className="bg-white shadow-md rounded-lg p-4">
           <h2 className="text-lg sm:text-xl font-medium mb-4">Block Summary</h2>
