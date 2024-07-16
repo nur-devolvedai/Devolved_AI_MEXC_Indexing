@@ -59,7 +59,7 @@ const BlockDetails = ({ blockId }: any) => {
             </div>
             <div className="flex justify-between">
               <span className="font-semibold">Validated By:</span>
-              <span>0x98c27cc3f0301b6272049dc3f972e2f542780629  in 2 secs</span>
+              <span className='  overflow-x-auto '>0x98c27cc3f0301b6272049dc3f972e2f542780629  in 2 secs</span>
             </div>
             <div className="flex justify-between">
               <span className="font-semibold">Block Reward:</span>
