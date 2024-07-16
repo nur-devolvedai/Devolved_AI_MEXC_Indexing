@@ -62,7 +62,7 @@ export default function SearchTransactions() {
       <table className="min-w-full bg-white border">
         <thead>
           <tr>
-            <th className="border px-4 py-2">Hash</th>
+            <th className="border px-4 py-2 text-red-600">Hash</th>
             <th className="border px-4 py-2">Block Number</th>
             <th className="border px-4 py-2">From</th>
             <th className="border px-4 py-2">To</th>

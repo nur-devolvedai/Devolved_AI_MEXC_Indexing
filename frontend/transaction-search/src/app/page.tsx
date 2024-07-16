@@ -1,5 +1,6 @@
+import SearchTransactions from '@/components/SearchTransactions';
 import Head from 'next/head';
-import SearchTransactions from '@/app/components/SearchTransactions';
+import './globals.css'
 
 export default function Home() {
   return (
@@ -11,7 +12,7 @@ export default function Home() {
       </Head>
 
       <main className="flex justify-center items-center min-h-screen bg-gray-100">
-        <SearchTransactions />
+        <SearchTransactions/>
       </main>
     </div>
   );
