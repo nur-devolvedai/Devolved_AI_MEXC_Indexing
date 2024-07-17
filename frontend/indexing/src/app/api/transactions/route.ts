@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import pool from '@/lib/db';
+import { connectToDatabase, pool } from '@/lib/dbConnect';
 
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
   if (request.method !== "POST") {
@@ -12,9 +12,9 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
     );
   }
 
-  const { hash } = await request.json();
+  const { txHash } = await request.json();
 
-  if (!hash || typeof hash !== 'string') {
+  if (!txHash) {
     return NextResponse.json(
       {
         success: false,
@@ -25,10 +25,15 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
   }
 
   try {
-    const result = await pool.query(
-      'SELECT * FROM transactions WHERE tx_hash = $1',
-      [hash]
-    );
+    await connectToDatabase();
+
+    const query = `
+      SELECT * FROM transactions
+      WHERE tx_hash = $1
+    `;
+    const values = [txHash];
+
+    const result = await pool.query(query, values);
 
     if (result.rows.length === 0) {
       return NextResponse.json(
@@ -43,7 +48,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
     return NextResponse.json(
       {
         success: true,
-        result: result.rows,
+        result: result.rows[0],
       },
       { status: 200 }
     );
