@@ -29,10 +29,10 @@ const Header: React.FC = () => {
           <Link href="/">
             <samp className="text-gray-700 hover:text-[#D91A9C]">Home</samp>
           </Link>
-          <Link href="/">
+          <Link href="/blocks">
             <samp className="text-gray-700 hover:text-[#D91A9C]">Blocks</samp>
           </Link>
-          <Link href="/">
+          <Link href="/transactions">
             <samp className="text-gray-700 hover:text-[#D91A9C]">Transactions</samp>
           </Link>
           {/* <Link href="/">

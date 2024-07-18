@@ -27,15 +27,15 @@ const Footer: React.FC = () => {
               <Link href="/">
                 <samp className="hover:text-[#D91A9C] mr-2">Home</samp>
               </Link>
-              <Link href="/">
+              <Link href="/blocks">
                 <samp className="hover:text-[#D91A9C] mx-2">Blocks</samp>
               </Link>
-              <Link href="/">
+              <Link href="/transactions">
                 <samp className="hover:text-[#D91A9C] mx-2">Transactions</samp>
               </Link>
-              <Link href="/">
+              {/* <Link href="/">
                 <samp className="hover:text-[#D91A9C] mx-2">Tokens</samp>
-              </Link>
+              </Link> */}
               
             </nav>
           </div>
