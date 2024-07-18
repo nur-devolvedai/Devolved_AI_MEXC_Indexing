@@ -35,12 +35,12 @@ const Header: React.FC = () => {
           <Link href="/">
             <samp className="text-gray-700 hover:text-[#D91A9C]">Transactions</samp>
           </Link>
-          <Link href="/">
+          {/* <Link href="/">
             <samp className="text-gray-700 hover:text-[#D91A9C]">Tokens</samp>
           </Link>
           <Link href="/">
             <samp className="text-gray-700 hover:text-[#D91A9C]">Contracts</samp>
-          </Link>
+          </Link> */}
         </nav>
 
         {/* Search Bar */}
@@ -54,14 +54,14 @@ const Header: React.FC = () => {
         </div>
 
         {/* User Account Options */}
-        <div className="hidden md:flex items-center space-x-4">
+        {/* <div className="hidden md:flex items-center space-x-4">
           <Link href="/">
             <samp className="text-gray-700 hover:text-[#D91A9C]">Sign In</samp>
           </Link>
           <Link href="/">
             <samp className="bg-[#D91A9C] text-white px-4 py-2 rounded-full hover:bg-[#e332ab]">Register</samp>
           </Link>
-        </div>
+        </div> */}
 
         {/* Mobile Menu Button */}
         <div className="md:hidden">
