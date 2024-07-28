@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import HomeSection from './HomeSection';
+import Link from 'next/link';
 
 const BlockDetails = ({ blockId }: any) => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -42,6 +43,13 @@ const BlockDetails = ({ blockId }: any) => {
         <button type="submit" className="px-4 py-2 h-16 bg-[#D91A9C] text-white rounded-r-full hover:bg-[#e332ab]">
           Search
         </button>
+        {/* if (${filter.charAt(0).toUpperCase() + filter.slice(1)}==="block") {
+          <Link href={'/blocks'}>
+            <button type="submit" className="px-4 py-2 h-16 bg-[#D91A9C] text-white rounded-r-full hover:bg-[#e332ab]">
+          Search
+        </button>
+          </Link>
+        } */}
       </form>
     </div>
 
