@@ -14,6 +14,7 @@ interface Block {
   txn: number;
   miner: string;
   gasUsed: string;
+  icon:string;
 }
 
 interface Transaction {
@@ -23,6 +24,7 @@ interface Transaction {
   from: string;
   to: string;
   value: string;
+  icon:string;
 }
 
 const HomeSection: React.FC = () => {
@@ -42,13 +44,20 @@ const HomeSection: React.FC = () => {
     setMaticMarketCap(10000000000);
     setLatestBlocks([
       // Mock data
-      { number: 59416842, age: '12 mins ago', txn: 120, miner: '0x1234...abcd', gasUsed: '10,761,180 (35.87%)' },
-      { number: 59416841, age: '15 mins ago', txn: 95, miner: '0x5678...efgh', gasUsed: '9,561,000 (31.87%)' }
+      {icon:'https://icons.veryicon.com/png/o/miscellaneous/fill-icon/block-11.png', number: 59416842, age: '12 mins ago', txn: 120, miner: '0x1234...abcd', gasUsed: '10,761,180 (35.87%)' },
+      {icon:'https://icons.veryicon.com/png/o/miscellaneous/fill-icon/block-11.png', number: 59416841, age: '15 mins ago', txn: 95, miner: '0x5678...efgh', gasUsed: '9,561,000 (31.87%)' },
+      {icon:'https://icons.veryicon.com/png/o/miscellaneous/fill-icon/block-11.png', number: 59416842, age: '12 mins ago', txn: 120, miner: '0x1234...abcd', gasUsed: '10,761,180 (35.87%)' },
+      {icon:'https://icons.veryicon.com/png/o/miscellaneous/fill-icon/block-11.png', number: 59416841, age: '15 mins ago', txn: 95, miner: '0x5678...efgh', gasUsed: '9,561,000 (31.87%)' },
+      {icon:'https://icons.veryicon.com/png/o/miscellaneous/fill-icon/block-11.png', number: 59416841, age: '15 mins ago', txn: 95, miner: '0x5678...efgh', gasUsed: '9,561,000 (31.87%)' }
     ]);
     setLatestTransactions([
       // Mock data
-      { hash: '0x1234...abcd', block: 59416842, age: '12 mins', from: '0x5678...efgh', to: '0x9101...ijkl', value: '1.23 ETH' },
-      { hash: '0x2345...bcde', block: 59416841, age: '15 mins', from: '0x6789...fghi', to: '0x1122...3344', value: '2.45 ETH' }
+      {icon:'https://icons.veryicon.com/png/o/miscellaneous/fill-icon/block-11.png', hash: '0x1234...abcd', block: 59416842, age: '12 mins', from: '0x5678...efgh', to: '0x9101...ijkl', value: '1.23 ETH' },
+      {icon:'https://icons.veryicon.com/png/o/miscellaneous/fill-icon/block-11.png', hash: '0x2345...bcde', block: 59416841, age: '15 mins', from: '0x6789...fghi', to: '0x1122...3344', value: '2.45 ETH' },
+      {icon:'https://icons.veryicon.com/png/o/miscellaneous/fill-icon/block-11.png', hash: '0x1234...abcd', block: 59416842, age: '12 mins', from: '0x5678...efgh', to: '0x9101...ijkl', value: '1.23 ETH' },
+      {icon:'https://icons.veryicon.com/png/o/miscellaneous/fill-icon/block-11.png', hash: '0x2345...bcde', block: 59416841, age: '15 mins', from: '0x6789...fghi', to: '0x1122...3344', value: '2.45 ETH' },
+      {icon:'https://icons.veryicon.com/png/o/miscellaneous/fill-icon/block-11.png', hash: '0x2345...bcde', block: 59416841, age: '15 mins', from: '0x6789...fghi', to: '0x1122...3344', value: '2.45 ETH' }
+      
     ]);
   }, []);
 
@@ -58,24 +67,24 @@ const HomeSection: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto p-4 sm:p-6 lg:p-8">
+    <div className="container mx-auto pt-6 lg:pt-20">
       {/* Top Section */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-        <div className="bg-white shadow-md rounded-lg p-4">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8 bg-white shadow-md rounded-lg p-4">
+        <div className="bg-white  rounded-lg p-4">
           <h2 className="text-lg font-medium">MATIC Price</h2>
-          <p className="text-xl font-bold">${maticPrice.toFixed(2)}</p>
+          <p className="">${maticPrice.toFixed(2)}</p>
         </div>
-        <div className="bg-white shadow-md rounded-lg p-4">
+        <div className="bg-white  rounded-lg p-4">
           <h2 className="text-lg font-medium">Transactions</h2>
-          <p className="text-xl font-bold">{transactions.toLocaleString()}</p>
+          <p className="">{transactions.toLocaleString()}</p>
         </div>
-        <div className="bg-white shadow-md rounded-lg p-4">
+        <div className="bg-white  rounded-lg p-4">
           <h2 className="text-lg font-medium">Med Gas Price</h2>
-          <p className="text-xl font-bold">{medGasPrice} Gwei</p>
+          <p className="">{medGasPrice} Gwei</p>
         </div>
-        <div className="bg-white shadow-md rounded-lg p-4">
+        <div className="bg-white  rounded-lg p-4">
           <h2 className="text-lg font-medium">MATIC Market Cap</h2>
-          <p className="text-xl font-bold">${maticMarketCap.toLocaleString()}</p>
+          <p className="">${maticMarketCap.toLocaleString()}</p>
         </div>
       </div>
 
@@ -88,21 +97,21 @@ const HomeSection: React.FC = () => {
             <table className="min-w-full divide-y divide-gray-200">
               <thead>
                 <tr>
+                {/* <th className="px-4 py-2 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th> */}
+                <th className="px-4 py-2 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-8 h-8">icon</th>
                   <th className="px-4 py-2 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Block</th>
                   <th className="px-4 py-2 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Age</th>
-                  <th className="px-4 py-2 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Txn</th>
-                  <th className="px-4 py-2 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Miner</th>
-                  <th className="px-4 py-2 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Gas Used</th>
+                  <th className="px-4 py-2 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Validated By
+                  </th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
                 {latestBlocks.map((block, index) => (
                   <tr key={index}>
-                    <td className="px-4 py-2 text-xs sm:text-sm text-gray-500">{block.number}</td>
-                    <td className="px-4 py-2 text-xs sm:text-sm text-gray-500">{block.age}</td>
-                    <td className="px-4 py-2 text-xs sm:text-sm text-gray-500">{block.txn}</td>
-                    <td className="px-4 py-2 text-xs sm:text-sm text-gray-500">{block.miner}</td>
-                    <td className="px-4 py-2 text-xs sm:text-sm text-gray-500">{block.gasUsed}</td>
+                    <td className="px-4 py-6 text-xs sm:text-sm text-gray-500 h-4 w-4"><img src={block.icon} alt="" /></td>
+                    <td className="px-4 py-6 text-xs sm:text-sm text-gray-500">{block.number}</td>
+                    <td className="px-4 py-6 text-xs sm:text-sm text-gray-500">{block.age}</td>
+                    <td className="px-4 py-6 text-xs sm:text-sm text-gray-500">{block.miner}</td>
                   </tr>
                 ))}
               </tbody>
@@ -117,23 +126,21 @@ const HomeSection: React.FC = () => {
             <table className="min-w-full divide-y divide-gray-200">
               <thead>
                 <tr>
+                  <th className="px-4 py-2 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">icon</th>
                   <th className="px-4 py-2 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Txn Hash</th>
-                  <th className="px-4 py-2 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Block</th>
                   <th className="px-4 py-2 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Age</th>
                   <th className="px-4 py-2 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">From</th>
                   <th className="px-4 py-2 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">To</th>
-                  <th className="px-4 py-2 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Value</th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
                 {latestTransactions.map((txn, index) => (
                   <tr key={index}>
-                    <td className="px-4 py-2 text-xs sm:text-sm text-gray-500">{txn.hash}</td>
-                    <td className="px-4 py-2 text-xs sm:text-sm text-gray-500">{txn.block}</td>
-                    <td className="px-4 py-2 text-xs sm:text-sm text-gray-500">{txn.age}</td>
-                    <td className="px-4 py-2 text-xs sm:text-sm text-gray-500">{txn.from}</td>
-                    <td className="px-4 py-2 text-xs sm:text-sm text-gray-500">{txn.to}</td>
-                    <td className="px-4 py-2 text-xs sm:text-sm text-gray-500">{txn.value}</td>
+                    <td className="px-4 py-6 text-xs sm:text-sm text-gray-500 h-4 w-4"><img src={txn.icon} alt="" /></td>
+                    <td className="px-4 py-6 text-xs sm:text-sm text-gray-500">{txn.hash}</td>
+                    <td className="px-4 py-6 text-xs sm:text-sm text-gray-500">{txn.age}</td>
+                    <td className="px-4 py-6 text-xs sm:text-sm text-gray-500">{txn.from}</td>
+                    <td className="px-4 py-6 text-xs sm:text-sm text-gray-500">{txn.to}</td>
                   </tr>
                 ))}
               </tbody>

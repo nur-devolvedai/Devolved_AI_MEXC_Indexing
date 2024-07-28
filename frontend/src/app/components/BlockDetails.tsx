@@ -20,7 +20,7 @@ const BlockDetails = ({ blockId }: any) => {
   return (
     <div className="container mx-auto p-4 sm:p-6 lg:p-8">
     {/* Centered Search Section */}
-    <div className="flex justify-center items-center mb-4">
+    <div className="flex justify-left items-left mb-4">
       <form onSubmit={handleSearch} className="w-full sm:w-auto flex items-center justify-center">
         <select
           value={filter}
