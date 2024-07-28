@@ -44,24 +44,24 @@ const Header: React.FC = () => {
         </nav>
 
         {/* Search Bar */}
-        <div className="flex-1 mx-4 hidden sm:block">
+        {/* <div className="flex-1 mx-4 hidden sm:block">
           <input
             disabled
             type="text"
             placeholder="Search by Address / Txn Hash / Block / Token"
             className="w-full px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[#D91A9C]"
           />
-        </div>
+        </div> */}
 
         {/* User Account Options */}
-        {/* <div className="hidden md:flex items-center space-x-4">
-          <Link href="/">
+        <div className="hidden md:flex items-center space-x-4">
+          {/* <Link href="/">
             <samp className="text-gray-700 hover:text-[#D91A9C]">Sign In</samp>
-          </Link>
+          </Link> */}
           <Link href="/">
-            <samp className="bg-[#D91A9C] text-white px-4 py-2 rounded-full hover:bg-[#e332ab]">Register</samp>
+            <samp className="bg-[#D91A9C] text-white px-4 py-2 rounded-full hover:bg-[#e332ab]">Contact Us</samp>
           </Link>
-        </div> */}
+        </div>
 
         {/* Mobile Menu Button */}
         <div className="md:hidden">
