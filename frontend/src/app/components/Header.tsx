@@ -58,7 +58,7 @@ const Header: React.FC = () => {
           {/* <Link href="/">
             <samp className="text-gray-700 hover:text-[#D91A9C]">Sign In</samp>
           </Link> */}
-          <Link href="/">
+          <Link href="https://devolvedai.com/" target="_blank">
             <samp className="bg-[#D91A9C] text-white px-4 py-2 rounded-full hover:bg-[#e332ab]">Contact Us</samp>
           </Link>
         </div>
@@ -97,6 +97,9 @@ const Header: React.FC = () => {
             <Link href="/transactions">
               <samp onClick={handleNavLinkClick} className="block text-gray-700 hover:bg-gray-200 px-3 py-2 rounded-md">Transactions</samp>
             </Link>
+            <Link href="https://devolvedai.com/" target="_blank">
+            <samp className="bg-[#D91A9C] text-white px-4 py-2 rounded-full hover:bg-[#e332ab]">Contact Us</samp>
+          </Link>
           </nav>
         </div>
       )}

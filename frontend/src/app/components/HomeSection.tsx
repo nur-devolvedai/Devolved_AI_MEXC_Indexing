@@ -1,11 +1,3 @@
-// import React from 'react'
-
-// export default function HomeSection() {
-//   return (
-//     <div>HomeSection</div>
-//   )
-// }
-
 import React, { useState, useEffect, FormEvent } from 'react';
 
 interface Block {
@@ -14,7 +6,6 @@ interface Block {
   txn: number;
   miner: string;
   gasUsed: string;
-  icon:string;
 }
 
 interface Transaction {
@@ -24,7 +15,6 @@ interface Transaction {
   from: string;
   to: string;
   value: string;
-  icon:string;
 }
 
 const HomeSection: React.FC = () => {
@@ -44,20 +34,19 @@ const HomeSection: React.FC = () => {
     setMaticMarketCap(10000000000);
     setLatestBlocks([
       // Mock data
-      {icon:'https://icons.veryicon.com/png/o/miscellaneous/fill-icon/block-11.png', number: 59416842, age: '12 mins ago', txn: 120, miner: '0x1234...abcd', gasUsed: '10,761,180 (35.87%)' },
-      {icon:'https://icons.veryicon.com/png/o/miscellaneous/fill-icon/block-11.png', number: 59416841, age: '15 mins ago', txn: 95, miner: '0x5678...efgh', gasUsed: '9,561,000 (31.87%)' },
-      {icon:'https://icons.veryicon.com/png/o/miscellaneous/fill-icon/block-11.png', number: 59416842, age: '12 mins ago', txn: 120, miner: '0x1234...abcd', gasUsed: '10,761,180 (35.87%)' },
-      {icon:'https://icons.veryicon.com/png/o/miscellaneous/fill-icon/block-11.png', number: 59416841, age: '15 mins ago', txn: 95, miner: '0x5678...efgh', gasUsed: '9,561,000 (31.87%)' },
-      {icon:'https://icons.veryicon.com/png/o/miscellaneous/fill-icon/block-11.png', number: 59416841, age: '15 mins ago', txn: 95, miner: '0x5678...efgh', gasUsed: '9,561,000 (31.87%)' }
+      {number: 59416842, age: '12 mins ago', txn: 120, miner: '0x1234...abcd', gasUsed: '10,761,180 (35.87%)' },
+      {number: 59416841, age: '15 mins ago', txn: 95, miner: '0x5678...efgh', gasUsed: '9,561,000 (31.87%)' },
+      {number: 59416842, age: '12 mins ago', txn: 120, miner: '0x1234...abcd', gasUsed: '10,761,180 (35.87%)' },
+      {number: 59416841, age: '15 mins ago', txn: 95, miner: '0x5678...efgh', gasUsed: '9,561,000 (31.87%)' },
+      {number: 59416841, age: '15 mins ago', txn: 95, miner: '0x5678...efgh', gasUsed: '9,561,000 (31.87%)' }
     ]);
     setLatestTransactions([
       // Mock data
-      {icon:'https://icons.veryicon.com/png/o/miscellaneous/fill-icon/block-11.png', hash: '0x1234...abcd', block: 59416842, age: '12 mins', from: '0x5678...efgh', to: '0x9101...ijkl', value: '1.23 ETH' },
-      {icon:'https://icons.veryicon.com/png/o/miscellaneous/fill-icon/block-11.png', hash: '0x2345...bcde', block: 59416841, age: '15 mins', from: '0x6789...fghi', to: '0x1122...3344', value: '2.45 ETH' },
-      {icon:'https://icons.veryicon.com/png/o/miscellaneous/fill-icon/block-11.png', hash: '0x1234...abcd', block: 59416842, age: '12 mins', from: '0x5678...efgh', to: '0x9101...ijkl', value: '1.23 ETH' },
-      {icon:'https://icons.veryicon.com/png/o/miscellaneous/fill-icon/block-11.png', hash: '0x2345...bcde', block: 59416841, age: '15 mins', from: '0x6789...fghi', to: '0x1122...3344', value: '2.45 ETH' },
-      {icon:'https://icons.veryicon.com/png/o/miscellaneous/fill-icon/block-11.png', hash: '0x2345...bcde', block: 59416841, age: '15 mins', from: '0x6789...fghi', to: '0x1122...3344', value: '2.45 ETH' }
-      
+      {hash: '0x1234...abcd', block: 59416842, age: '12 mins', from: '0x5678...efgh', to: '0x9101...ijkl', value: '1.23 ETH' },
+      {hash: '0x2345...bcde', block: 59416841, age: '15 mins', from: '0x6789...fghi', to: '0x1122...3344', value: '2.45 ETH' },
+      {hash: '0x1234...abcd', block: 59416842, age: '12 mins', from: '0x5678...efgh', to: '0x9101...ijkl', value: '1.23 ETH' },
+      {hash: '0x2345...bcde', block: 59416841, age: '15 mins', from: '0x6789...fghi', to: '0x1122...3344', value: '2.45 ETH' },
+      {hash: '0x2345...bcde', block: 59416841, age: '15 mins', from: '0x6789...fghi', to: '0x1122...3344', value: '2.45 ETH' }
     ]);
   }, []);
 
@@ -70,19 +59,19 @@ const HomeSection: React.FC = () => {
     <div className="container mx-auto pt-6 lg:pt-20">
       {/* Top Section */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8 bg-white shadow-md rounded-lg p-4">
-        <div className="bg-white  rounded-lg p-4">
+        <div className="bg-white p-4 border-r border-gray-300">
           <h2 className="text-md text-gray-500 font-medium">MATIC Price</h2>
           <p className="text-sm text-[#D91A9C]">${maticPrice.toFixed(2)}</p>
         </div>
-        <div className="bg-white  rounded-lg p-4">
+        <div className="bg-white  border-r border-gray-300 p-4">
           <h2 className="text-lg text-gray-500 font-medium">Transactions</h2>
           <p className="text-sm text-[#D91A9C]">{transactions.toLocaleString()}</p>
         </div>
-        <div className="bg-white  rounded-lg p-4">
+        <div className="bg-white  border-r border-gray-300 p-4">
           <h2 className="text-lg text-gray-500 font-medium">Med Gas Price</h2>
           <p className="text-sm text-[#D91A9C]">{medGasPrice} Gwei</p>
         </div>
-        <div className="bg-white  rounded-lg p-4">
+        <div className="bg-white  border-r border-gray-300 p-4">
           <h2 className="text-lg text-gray-500 font-medium">MATIC Market Cap</h2>
           <p className="text-sm text-[#D91A9C]">${maticMarketCap.toLocaleString()}</p>
         </div>
