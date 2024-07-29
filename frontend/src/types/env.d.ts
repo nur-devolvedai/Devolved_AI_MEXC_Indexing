@@ -6,6 +6,9 @@ declare namespace NodeJS {
       POSTGRES_PORT: string;
       POSTGRES_DB: string;
       DATABASE_URL: string;
+      RPC_NODE_URL: string;
+      REDIS_HOST: string;
+      REDIS_PORT: string;
     }
   }
   

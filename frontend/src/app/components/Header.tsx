@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import HeaderLogo from '../../../public/headerLogo.jpg';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -20,12 +21,16 @@ const Header: React.FC = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center py-4">
         {/* Logo */}
         <div className="flex items-center">
-          <Image src="/headerLogo.jpg" alt="Logo" width={60} height={60} className="h-8 w-8 sm:h-16 sm:w-16" />
-          <span className="ml-2 mr-8 text-xl font-bold">Argochain Indexing</span>
+        <Link href="/">
+              <samp className="flex items-center text-gray-700">
+                <Image src="/headerLogo.jpg" alt="Logo" width={40} height={40} className="h-10 w-10" />
+                <span className="ml-2 text-xl font-bold">Argochain Indexing</span>
+              </samp>
+            </Link>
         </div>
 
         {/* Navigation Links */}
-        <nav className="hidden md:flex space-x-4">
+        {/* <nav className="hidden md:flex space-x-4">
           <Link href="/">
             <samp className="text-gray-700 hover:text-[#D91A9C]">Home</samp>
           </Link>
@@ -35,33 +40,14 @@ const Header: React.FC = () => {
           <Link href="/transactions">
             <samp className="text-gray-700 hover:text-[#D91A9C]">Transactions</samp>
           </Link>
-          {/* <Link href="/">
-            <samp className="text-gray-700 hover:text-[#D91A9C]">Tokens</samp>
-          </Link>
-          <Link href="/">
-            <samp className="text-gray-700 hover:text-[#D91A9C]">Contracts</samp>
-          </Link> */}
-        </nav>
-
-        {/* Search Bar */}
-        <div className="flex-1 mx-4 hidden sm:block">
-          <input
-            disabled
-            type="text"
-            placeholder="Search by Address / Txn Hash / Block / Token"
-            className="w-full px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[#D91A9C]"
-          />
-        </div>
+        </nav> */}
 
         {/* User Account Options */}
-        {/* <div className="hidden md:flex items-center space-x-4">
-          <Link href="/">
-            <samp className="text-gray-700 hover:text-[#D91A9C]">Sign In</samp>
+        <div className="hidden md:flex items-center space-x-4">
+          <Link href="https://devolvedai.com/" target="_blank">
+            <samp className="bg-[#D91A9C] text-white px-4 py-2 rounded-full hover:bg-[#e332ab]">Contact Us</samp>
           </Link>
-          <Link href="/">
-            <samp className="bg-[#D91A9C] text-white px-4 py-2 rounded-full hover:bg-[#e332ab]">Register</samp>
-          </Link>
-        </div> */}
+        </div>
 
         {/* Mobile Menu Button */}
         <div className="md:hidden">
@@ -88,27 +74,18 @@ const Header: React.FC = () => {
       {isMenuOpen && (
         <div className="md:hidden">
           <nav className="px-2 pt-2 pb-4 space-y-1 sm:px-3">
-            <Link href="/">
+            {/* <Link href="/">
               <samp onClick={handleNavLinkClick} className="block text-gray-700 hover:bg-gray-200 px-3 py-2 rounded-md">Home</samp>
             </Link>
-            <Link href="/">
+            <Link href="/blocks">
               <samp onClick={handleNavLinkClick} className="block text-gray-700 hover:bg-gray-200 px-3 py-2 rounded-md">Blocks</samp>
             </Link>
-            <Link href="/">
+            <Link href="/transactions">
               <samp onClick={handleNavLinkClick} className="block text-gray-700 hover:bg-gray-200 px-3 py-2 rounded-md">Transactions</samp>
-            </Link>
-            <Link href="/">
-              <samp onClick={handleNavLinkClick} className="block text-gray-700 hover:bg-gray-200 px-3 py-2 rounded-md">Tokens</samp>
-            </Link>
-            <Link href="/">
-              <samp onClick={handleNavLinkClick} className="block text-gray-700 hover:bg-gray-200 px-3 py-2 rounded-md">Contracts</samp>
-            </Link>
-            <Link href="/">
-              <samp onClick={handleNavLinkClick} className="block text-gray-700 hover:bg-gray-200 px-3 py-2 rounded-md">Sign In</samp>
-            </Link>
-            <Link href="/">
-              <samp onClick={handleNavLinkClick} className="block text-gray-700 hover:bg-gray-200 px-3 py-2 rounded-md">Register</samp>
-            </Link>
+            </Link> */}
+            <Link href="https://devolvedai.com/" target="_blank">
+            <samp className="bg-[#D91A9C] text-white px-4 py-2 rounded-full hover:bg-[#e332ab]">Contact Us</samp>
+          </Link>
           </nav>
         </div>
       )}
