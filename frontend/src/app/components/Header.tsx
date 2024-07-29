@@ -91,23 +91,11 @@ const Header: React.FC = () => {
             <Link href="/">
               <samp onClick={handleNavLinkClick} className="block text-gray-700 hover:bg-gray-200 px-3 py-2 rounded-md">Home</samp>
             </Link>
-            <Link href="/">
+            <Link href="/blocks">
               <samp onClick={handleNavLinkClick} className="block text-gray-700 hover:bg-gray-200 px-3 py-2 rounded-md">Blocks</samp>
             </Link>
-            <Link href="/">
+            <Link href="/transactions">
               <samp onClick={handleNavLinkClick} className="block text-gray-700 hover:bg-gray-200 px-3 py-2 rounded-md">Transactions</samp>
-            </Link>
-            <Link href="/">
-              <samp onClick={handleNavLinkClick} className="block text-gray-700 hover:bg-gray-200 px-3 py-2 rounded-md">Tokens</samp>
-            </Link>
-            <Link href="/">
-              <samp onClick={handleNavLinkClick} className="block text-gray-700 hover:bg-gray-200 px-3 py-2 rounded-md">Contracts</samp>
-            </Link>
-            <Link href="/">
-              <samp onClick={handleNavLinkClick} className="block text-gray-700 hover:bg-gray-200 px-3 py-2 rounded-md">Sign In</samp>
-            </Link>
-            <Link href="/">
-              <samp onClick={handleNavLinkClick} className="block text-gray-700 hover:bg-gray-200 px-3 py-2 rounded-md">Register</samp>
             </Link>
           </nav>
         </div>
