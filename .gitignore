@@ -553,4 +553,4 @@ MigrationBackup/
 # txt
 *.txt
 
-/backend
+backend

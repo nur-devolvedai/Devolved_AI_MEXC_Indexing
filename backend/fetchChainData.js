@@ -39,11 +39,11 @@ const main = async () => {
     }
 
     // Check if the difference between the latest block number and the last processed block number is more than 2
-    if (latestBlockNumber - startBlockNumber > 5) {
-      console.log('Block processing is lagging. Restarting process to resynchronize.');
-      await delay(RESTART_DELAY); // Wait for 5 seconds before restarting
-      restartPM2();
-    }
+    // if (latestBlockNumber - startBlockNumber > 5) {
+    //   console.log('Block processing is lagging. Restarting process to resynchronize.');
+    //   await delay(RESTART_DELAY); // Wait for 5 seconds before restarting
+    //   restartPM2();
+    // }
 
     // Process blocks in batches
     for (let blockNumber = startBlockNumber; blockNumber <= latestBlockNumber; blockNumber += BATCH_SIZE) {

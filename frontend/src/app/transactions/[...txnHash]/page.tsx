@@ -12,23 +12,27 @@ const TransactionDetails = () => {
   const txnHash = pathname.split('/').pop(); 
   console.log(txnHash);
 
-  useEffect(() => {
+  useEffect( () =>
+  {
     // Initialize ClipboardJS
-    const clipboard = new ClipboardJS('.copy-btn');
-    
-    clipboard.on('success', function(e) {
-      console.log(e);
-    });
-    
-    clipboard.on('error', function(e) {
-      console.log(e);
-    });
+    const clipboard = new ClipboardJS( '.copy-btn' );
+
+    clipboard.on( 'success', function ( e )
+    {
+      console.log( e );
+    } );
+
+    clipboard.on( 'error', function ( e )
+    {
+      console.log( e );
+    } );
 
     // Cleanup
-    return () => {
+    return () =>
+    {
       clipboard.destroy();
     };
-  }, []);
+  }, [] );
 
   useEffect(() => {
     if (txnHash) {
@@ -69,7 +73,7 @@ const TransactionDetails = () => {
     <div className="container mx-auto p-4 sm:p-6 lg:p-8">
       {error && <div className="text-red-500 text-center mb-4">{error}</div>}
 
-      {transactionData && (
+      { transactionData && (
         <div className="mt-6">
           <div className="bg-white shadow-md rounded-lg p-4">
             <h2 className="text-lg sm:text-xl font-bold mb-4">Transaction Details</h2>
@@ -90,7 +94,7 @@ const TransactionDetails = () => {
 
               <div className="flex justify-between">
                 <span className="font-semibold">Block Number:</span>
-                <span>{transactionData.block_number}</span>
+                <span>{ transactionData.block_number }</span>
               </div>
 
               <hr className="opacity-75"></hr>
@@ -125,14 +129,14 @@ const TransactionDetails = () => {
 
               <div className="flex justify-between">
                 <span className="font-semibold">Amount:</span>
-                <span>{convertTo18Precision(transactionData.amount)} AGC</span>
+                <span>{ convertTo18Precision( transactionData.amount ) } AGC</span>
               </div>
 
               <hr className="opacity-75"></hr>
 
               <div className="flex justify-between">
                 <span className="font-semibold">Transaction Fee:</span>
-                <span>{convertTo18Precision(transactionData.gas_fee)} AGC</span>
+                <span>{ convertTo18Precision( transactionData.gas_fee ) } AGC</span>
               </div>
 
               <hr className="opacity-75"></hr>
@@ -140,7 +144,7 @@ const TransactionDetails = () => {
               <div className="flex justify-between">
                 <span className="font-semibold">Status:</span>
                 <span>
-                  {transactionData.method === 'balances.transferKeepAlive' || transactionData.method === 'balances.transfer' ? (
+                  { transactionData.method === 'balances.transferKeepAlive' || transactionData.method === 'balances.transfer' ? (
                     <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium bg-green-100 text-green-800">
                       <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
@@ -148,14 +152,14 @@ const TransactionDetails = () => {
                       Success
                     </span>
                   ) : (
-                    <span>{transactionData.method}</span>
-                  )}
+                    <span>{ transactionData.method }</span>
+                  ) }
                 </span>
               </div>
             </div>
           </div>
         </div>
-      )}
+      ) }
     </div>
   );
 };
