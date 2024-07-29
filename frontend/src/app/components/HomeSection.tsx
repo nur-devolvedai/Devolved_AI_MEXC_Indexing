@@ -72,26 +72,26 @@ const HomeSection: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8 bg-white shadow-md rounded-lg p-4">
         <div className="bg-white  rounded-lg p-4">
           <h2 className="text-lg font-medium">MATIC Price</h2>
-          <p className="">${maticPrice.toFixed(2)}</p>
+          <p className=" text-[#D91A9C]">${maticPrice.toFixed(2)}</p>
         </div>
         <div className="bg-white  rounded-lg p-4">
           <h2 className="text-lg font-medium">Transactions</h2>
-          <p className="">{transactions.toLocaleString()}</p>
+          <p className="text-[#D91A9C]">{transactions.toLocaleString()}</p>
         </div>
         <div className="bg-white  rounded-lg p-4">
           <h2 className="text-lg font-medium">Med Gas Price</h2>
-          <p className="">{medGasPrice} Gwei</p>
+          <p className="text-[#D91A9C]">{medGasPrice} Gwei</p>
         </div>
         <div className="bg-white  rounded-lg p-4">
           <h2 className="text-lg font-medium">MATIC Market Cap</h2>
-          <p className="">${maticMarketCap.toLocaleString()}</p>
+          <p className="text-[#D91A9C]">${maticMarketCap.toLocaleString()}</p>
         </div>
       </div>
 
       {/* Latest Blocks and Transactions Sections */}
       <div className="flex flex-col md:flex-row justify-between space-y-8 md:space-y-0 md:space-x-8">
         {/* Latest Blocks Section */}
-        <div className="w-full md:w-1/2">
+        <div className="w-full md:w-1/2 overflow-auto">
           <h2 className="text-2xl font-semibold mb-4">Latest Blocks</h2>
           <div className="bg-white shadow-md rounded-lg p-4">
             <table className="min-w-full divide-y divide-gray-200">
@@ -108,10 +108,10 @@ const HomeSection: React.FC = () => {
               <tbody className="bg-white divide-y divide-gray-200">
                 {latestBlocks.map((block, index) => (
                   <tr key={index}>
-                    <td className="px-4 py-6 text-xs sm:text-sm text-gray-500 h-4 w-4"><img src={block.icon} alt="" /></td>
-                    <td className="px-4 py-6 text-xs sm:text-sm text-gray-500">{block.number}</td>
-                    <td className="px-4 py-6 text-xs sm:text-sm text-gray-500">{block.age}</td>
-                    <td className="px-4 py-6 text-xs sm:text-sm text-gray-500">{block.miner}</td>
+                    <td className="px-5 py-7 bg-gray-100 text-xs sm:text-sm text-gray-500 h-4 w-4"><img src='./icon-block.png' alt="block-icon" /></td>
+                    <td className="px-4 py-6 text-xs sm:text-sm text-[#D91A9C]">{block.number}</td>
+                    <td className="px-4 py-6 text-xs sm:text-sm text-[#D91A9C]">{block.age}</td>
+                    <td className="px-4 py-6 text-xs sm:text-sm text-[#D91A9C]">{block.miner}</td>
                   </tr>
                 ))}
               </tbody>
@@ -122,7 +122,7 @@ const HomeSection: React.FC = () => {
         {/* Latest Transactions Section */}
         <div className="w-full md:w-1/2">
           <h2 className="text-2xl font-semibold mb-4">Latest Transactions</h2>
-          <div className="bg-white shadow-md rounded-lg p-4">
+          <div className="bg-white shadow-md rounded-lg p-4 overflow-auto">
             <table className="min-w-full divide-y divide-gray-200">
               <thead>
                 <tr>
@@ -136,11 +136,11 @@ const HomeSection: React.FC = () => {
               <tbody className="bg-white divide-y divide-gray-200">
                 {latestTransactions.map((txn, index) => (
                   <tr key={index}>
-                    <td className="px-4 py-6 text-xs sm:text-sm text-gray-500 h-4 w-4"><img src={txn.icon} alt="" /></td>
-                    <td className="px-4 py-6 text-xs sm:text-sm text-gray-500">{txn.hash}</td>
-                    <td className="px-4 py-6 text-xs sm:text-sm text-gray-500">{txn.age}</td>
-                    <td className="px-4 py-6 text-xs sm:text-sm text-gray-500">{txn.from}</td>
-                    <td className="px-4 py-6 text-xs sm:text-sm text-gray-500">{txn.to}</td>
+                    <td className="px-5 py-7 bg-gray-100 text-xs sm:text-sm text-gray-500 h-4 w-4"><img src='./transactions-icon.png' alt="transaction-icon" /></td>
+                    <td className="px-4 py-6 text-xs sm:text-sm text-[#D91A9C]">{txn.hash}</td>
+                    <td className="px-4 py-6 text-xs sm:text-sm text-[#D91A9C]">{txn.age}</td>
+                    <td className="px-4 py-6 text-xs sm:text-sm text-[#D91A9C]">{txn.from}</td>
+                    <td className="px-4 py-6 text-xs sm:text-sm text-[#D91A9C]">{txn.to}</td>
                   </tr>
                 ))}
               </tbody>
