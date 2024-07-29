@@ -71,20 +71,20 @@ const HomeSection: React.FC = () => {
       {/* Top Section */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8 bg-white shadow-md rounded-lg p-4">
         <div className="bg-white  rounded-lg p-4">
-          <h2 className="text-lg font-medium">MATIC Price</h2>
-          <p className=" text-[#D91A9C]">${maticPrice.toFixed(2)}</p>
+          <h2 className="text-md text-gray-500 font-medium">MATIC Price</h2>
+          <p className="text-sm text-[#D91A9C]">${maticPrice.toFixed(2)}</p>
         </div>
         <div className="bg-white  rounded-lg p-4">
-          <h2 className="text-lg font-medium">Transactions</h2>
-          <p className="text-[#D91A9C]">{transactions.toLocaleString()}</p>
+          <h2 className="text-lg text-gray-500 font-medium">Transactions</h2>
+          <p className="text-sm text-[#D91A9C]">{transactions.toLocaleString()}</p>
         </div>
         <div className="bg-white  rounded-lg p-4">
-          <h2 className="text-lg font-medium">Med Gas Price</h2>
-          <p className="text-[#D91A9C]">{medGasPrice} Gwei</p>
+          <h2 className="text-lg text-gray-500 font-medium">Med Gas Price</h2>
+          <p className="text-sm text-[#D91A9C]">{medGasPrice} Gwei</p>
         </div>
         <div className="bg-white  rounded-lg p-4">
-          <h2 className="text-lg font-medium">MATIC Market Cap</h2>
-          <p className="text-[#D91A9C]">${maticMarketCap.toLocaleString()}</p>
+          <h2 className="text-lg text-gray-500 font-medium">MATIC Market Cap</h2>
+          <p className="text-sm text-[#D91A9C]">${maticMarketCap.toLocaleString()}</p>
         </div>
       </div>
 
@@ -92,7 +92,7 @@ const HomeSection: React.FC = () => {
       <div className="flex flex-col md:flex-row justify-between space-y-8 md:space-y-0 md:space-x-8">
         {/* Latest Blocks Section */}
         <div className="w-full md:w-1/2 overflow-auto">
-          <h2 className="text-2xl font-semibold mb-4">Latest Blocks</h2>
+          <h2 className="text-xl font-semibold mb-4">Latest Blocks</h2>
           <div className="bg-white shadow-md rounded-lg p-4">
             <table className="min-w-full divide-y divide-gray-200">
               <thead>
@@ -121,7 +121,7 @@ const HomeSection: React.FC = () => {
 
         {/* Latest Transactions Section */}
         <div className="w-full md:w-1/2">
-          <h2 className="text-2xl font-semibold mb-4">Latest Transactions</h2>
+          <h2 className="text-xl font-semibold mb-4">Latest Transactions</h2>
           <div className="bg-white shadow-md rounded-lg p-4 overflow-auto">
             <table className="min-w-full divide-y divide-gray-200">
               <thead>
