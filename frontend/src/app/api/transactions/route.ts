@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { connectToDatabase, pool } from '@/lib/dbConnect';
+import { connectToDatabase, pool } from "@/lib/dbConnect";
 
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
   if (request.method !== "POST") {
@@ -9,6 +9,17 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
         message: "Method not allowed!",
       },
       { status: 405 }
+    );
+  }
+
+  const nextActionHeader = request.headers.get("next-action");
+  if (!nextActionHeader) {
+    return NextResponse.json(
+      {
+        success: false,
+        message: "Missing 'next-action' header",
+      },
+      { status: 400 }
     );
   }
 
@@ -53,11 +64,11 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
       { status: 200 }
     );
   } catch (error) {
-    console.error(error);
+    console.error("Error: ", error);
     return NextResponse.json(
       {
         success: false,
-        result: 'Internal server error'
+        result: "Internal server error",
       },
       { status: 500 }
     );
