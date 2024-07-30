@@ -22,6 +22,7 @@ const HomeSection: React.FC = () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'next-action': 'search-transaction'
       },
     })
     .then((response) => response.json())
@@ -38,6 +39,7 @@ const HomeSection: React.FC = () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'next-action': 'search-transaction'
       },
     })
     .then((response) => response.json())
@@ -61,7 +63,7 @@ const HomeSection: React.FC = () => {
         {/* Latest Blocks Section */}
         <div className="w-full md:w-1/2 overflow-auto">
           <h2 className="text-xl font-semibold mb-4">Latest Blocks</h2>
-          <div className="bg-white shadow-md rounded-lg p-4">
+          <div className="bg-white shadow-md rounded-lg p-4 overflow-auto">
             <table className="min-w-full divide-y divide-gray-200">
               <thead>
                 <tr>
@@ -87,7 +89,7 @@ const HomeSection: React.FC = () => {
         </div>
 
         {/* Latest Transactions Section */}
-        <div className="w-full md:w-1/2">
+        <div className="w-full md:w-1/2 overflow-auto">
           <h2 className="text-xl font-semibold mb-4">Latest Transactions</h2>
           <div className="bg-white shadow-md rounded-lg p-4 overflow-auto">
             <table className="min-w-full divide-y divide-gray-200">

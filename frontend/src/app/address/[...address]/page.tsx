@@ -13,7 +13,6 @@ interface Transaction {
   to_address: string;
   amount: string;
   gas_fee: string;
-  // Add any other properties you have in your transaction data
 }
 
 const TransactionDetailsByAddress = () => {
@@ -46,12 +45,13 @@ const TransactionDetailsByAddress = () => {
     }
   }, [address]);
 
-  const fetchTransactionDetails = async (txHash: string) => {
+  const fetchTransactionDetails = async (address: string) => {
     try {
       const response = await fetch('/api/transaction-by-address', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'next-action': 'search-transaction'
         },
         body: JSON.stringify({ address })
       });
