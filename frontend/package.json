@@ -29,7 +29,8 @@
     "react-icons": "^5.2.1",
     "redis": "^4.6.15",
     "sharp": "^0.33.3",
-    "url": "^0.11.3"
+    "url": "^0.11.3",
+    "ws": "^8.18.0"
   },
   "devDependencies": {
     "@types/node": "^20.12.3",
