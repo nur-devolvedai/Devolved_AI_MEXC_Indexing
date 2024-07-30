@@ -4,7 +4,7 @@
   "description": "An explorer made specifically for the Argochain ecosystem.",
   "main": "fetchChainData.js",
   "scripts": {
-    "start": "node listner.js"
+    "start": "node listener.js"
   },
   "author": "",
   "license": "ISC",
