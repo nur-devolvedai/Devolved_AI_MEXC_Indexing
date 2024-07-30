@@ -10,7 +10,7 @@ const TransactionDetails = () => {
   const [error, setError] = useState<string | null>(null);
   const pathname = usePathname();
   const txnHash = pathname.split('/').pop(); 
-  console.log(txnHash);
+  // console.log(txnHash);
 
   useEffect( () =>
   {

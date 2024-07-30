@@ -1,8 +1,13 @@
-import React from 'react';
+'use client'
+
+import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
 const Footer: React.FC = () => {
+  const year = new Date().getFullYear();
+  const [currentYear] = useState(year);
+
   return (
     <footer className=" text-gray-700 py-10">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -16,7 +21,7 @@ const Footer: React.FC = () => {
               </samp>
             </Link>
             <p className="mt-4 text-sm">
-            Argochain is a Block Explorer and Analytics Platform for Polygon, a decentralized smart contracts platform.
+            Argochain Indexing is a Block Explorer and Analytics Platform for Argochain.
             </p>
           </div>
 
@@ -62,7 +67,7 @@ const Footer: React.FC = () => {
         </div>
 
         <div className="border-t border-gray-800 mt-8 pt-4 text-center">
-          <p className="text-sm">&copy; 2024 DevolvedAI. All rights reserved.</p>
+          <p className="text-sm">&copy; {currentYear} DevolvedAI. All rights reserved.</p>
         </div>
       </div>
     </footer>

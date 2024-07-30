@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@lottiefiles/react-lottie-player": "^3.5.4",
     "@polkadot/api": "^12.2.2",
     "@polkadot/util": "^13.0.2",
     "body-parser": "^1.20.2",

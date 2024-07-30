@@ -18,7 +18,7 @@ const BlocksDetailsByBlockNumber = () => {
   const [error, setError] = useState<string | null>(null);
   const pathname = usePathname();
   const blockNumber = pathname.split('/').pop();
-  console.log(blockNumber);
+  // console.log(blockNumber);
 
   useEffect(() => {
     // Initialize ClipboardJS
@@ -56,7 +56,7 @@ const BlocksDetailsByBlockNumber = () => {
       });
 
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
 
       if (data.success) {
         setBlockData(data.result);
