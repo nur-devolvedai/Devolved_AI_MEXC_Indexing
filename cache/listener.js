@@ -33,7 +33,7 @@ const initialize = async () => {
     setInterval(async () => {
       await initializeRedisTransactions();
       await initializeRedisBlocks();
-    }, 60000); // Update every 60 seconds
+    }, 5000); // Update every 5 seconds
 
     // Listen for new transactions and blocks
     pgClient.on('notification', async (msg) => {
