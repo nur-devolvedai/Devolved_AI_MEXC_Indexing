@@ -86,6 +86,7 @@ const TransactionDetailsByAddress = () => {
       });
 
       const data = await response.json();
+      console.log("balance", data);
 
       if (data.success) {
         setBalance(data.balance);
