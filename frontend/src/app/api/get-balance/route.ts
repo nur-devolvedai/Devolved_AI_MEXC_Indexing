@@ -3,15 +3,27 @@ import { ApiPromise, WsProvider } from "@polkadot/api";
 import { formatBalance } from "@polkadot/util";
 
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
-    if (request.method !== "POST") {
-        return NextResponse.json(
-            {
-            success: false,
-            message: "Method not allowed!",
-            },
-            { status: 405 }
-        );
-    }
+  if (request.method !== "POST") {
+      return NextResponse.json(
+          {
+          success: false,
+          message: "Method not allowed!",
+          },
+          { status: 405 }
+      );
+  }
+
+  const nextActionHeader = request.headers.get("next-action");
+  if (!nextActionHeader) {
+    return NextResponse.json(
+      {
+        success: false,
+        message: "Missing 'next-action' header",
+      },
+      { status: 400 }
+    );
+  }
+  
   try {
     const { address } = await request.json();
 
