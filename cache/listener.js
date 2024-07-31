@@ -14,7 +14,7 @@ const redisClient = createClient({
   url: `redis://${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`,
 });
 
-const main = async () => {
+const initialize = async () => {
   try {
     await pgClient.connect();
     console.log('Connected to PostgreSQL');
@@ -24,10 +24,18 @@ const main = async () => {
 
     pgClient.query('LISTEN new_transaction');
     pgClient.query('LISTEN new_block');
-    initializeRedisTransactions(); // Initial setup of the Redis list for transactions
-    initializeRedisBlocks(); // Initial setup of the Redis list for blocks
 
-    // Listen for new transactions and update Redis
+    // Initial setup of the Redis list for transactions and blocks
+    await initializeRedisTransactions();
+    await initializeRedisBlocks();
+
+    // Periodically update Redis cache
+    setInterval(async () => {
+      await initializeRedisTransactions();
+      await initializeRedisBlocks();
+    }, 60000); // Update every 60 seconds
+
+    // Listen for new transactions and blocks
     pgClient.on('notification', async (msg) => {
       const payload = JSON.parse(msg.payload);
 
@@ -72,8 +80,8 @@ const main = async () => {
     });
 
   } catch (err) {
-    console.error('Error in main function:', err);
-    setTimeout(main, 5000); // Retry after 5 seconds
+    console.error('Error in initialize function:', err);
+    setTimeout(initialize, 5000); // Retry after 5 seconds
   }
 };
 
@@ -142,4 +150,4 @@ const initializeRedisBlocks = async () => {
   }
 };
 
-main();
+initialize();
