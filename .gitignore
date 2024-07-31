@@ -554,4 +554,3 @@ MigrationBackup/
 *.txt
 
 backend/
-cache/

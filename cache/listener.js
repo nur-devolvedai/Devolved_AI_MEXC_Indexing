@@ -14,23 +14,88 @@ const redisClient = createClient({
   url: `redis://${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`,
 });
 
-pgClient.connect((err) => {
-  if (err) {
-    console.error('PostgreSQL client connection error', err);
-  } else {
+const main = async () => {
+  try {
+    await pgClient.connect();
     console.log('Connected to PostgreSQL');
+
+    await redisClient.connect();
+    console.log('Connected to Redis');
+
     pgClient.query('LISTEN new_transaction');
     pgClient.query('LISTEN new_block');
     initializeRedisTransactions(); // Initial setup of the Redis list for transactions
     initializeRedisBlocks(); // Initial setup of the Redis list for blocks
+
+    // Listen for new transactions and update Redis
+    pgClient.on('notification', async (msg) => {
+      const payload = JSON.parse(msg.payload);
+
+      if (msg.channel === 'new_transaction') {
+        const txHash = payload.txHash;
+        const query = 'SELECT * FROM transactions WHERE tx_hash = $1';
+        const values = [txHash];
+        try {
+          const res = await pgClient.query(query, values);
+          if (res.rows.length > 0) {
+            await addTransactionWithTimestampToRedis(res.rows[0]);
+          }
+        } catch (err) {
+          console.error('Error fetching new transaction from PostgreSQL', err);
+        }
+      }
+
+      if (msg.channel === 'new_block') {
+        const blockNumber = payload.blockNumber;
+        const query = 'SELECT * FROM blocks WHERE block_number = $1';
+        const values = [blockNumber];
+        try {
+          const res = await pgClient.query(query, values);
+          if (res.rows.length > 0) {
+            await redisClient.rPush('latest_blocks', JSON.stringify(res.rows[0]));
+            await redisClient.lTrim('latest_blocks', 0, 99); // Ensure there are only 100 elements
+          }
+        } catch (err) {
+          console.error('Error fetching new block from PostgreSQL', err);
+        }
+      }
+    });
+
+    pgClient.on('error', (err) => {
+      console.error('PostgreSQL client error', err);
+      reconnectPostgres();
+    });
+
+    redisClient.on('error', (err) => {
+      console.error('Redis client error', err);
+      reconnectRedis();
+    });
+
+  } catch (err) {
+    console.error('Error in main function:', err);
+    setTimeout(main, 5000); // Retry after 5 seconds
   }
-});
+};
 
-redisClient.on('connect', () => {
-  console.log('Connected to Redis');
-});
+const reconnectPostgres = () => {
+  console.log('Reconnecting to PostgreSQL...');
+  pgClient.connect((err) => {
+    if (err) {
+      console.error('PostgreSQL client reconnection error', err);
+      setTimeout(reconnectPostgres, 5000); // Retry after 5 seconds
+    } else {
+      console.log('Reconnected to PostgreSQL');
+    }
+  });
+};
 
-redisClient.connect().catch(console.error);
+const reconnectRedis = () => {
+  console.log('Reconnecting to Redis...');
+  redisClient.connect().catch((err) => {
+    console.error('Redis client reconnection error', err);
+    setTimeout(reconnectRedis, 5000); // Retry after 5 seconds
+  });
+};
 
 // Function to initialize the Redis list with the latest 100 transactions
 const initializeRedisTransactions = async () => {
@@ -77,44 +142,4 @@ const initializeRedisBlocks = async () => {
   }
 };
 
-// Listen for new transactions and update Redis
-pgClient.on('notification', async (msg) => {
-  const payload = JSON.parse(msg.payload);
-
-  if (msg.channel === 'new_transaction') {
-    const txHash = payload.txHash;
-    const query = 'SELECT * FROM transactions WHERE tx_hash = $1';
-    const values = [txHash];
-    try {
-      const res = await pgClient.query(query, values);
-      if (res.rows.length > 0) {
-        await addTransactionWithTimestampToRedis(res.rows[0]);
-      }
-    } catch (err) {
-      console.error('Error fetching new transaction from PostgreSQL', err);
-    }
-  }
-
-  if (msg.channel === 'new_block') {
-    const blockNumber = payload.blockNumber;
-    const query = 'SELECT * FROM blocks WHERE block_number = $1';
-    const values = [blockNumber];
-    try {
-      const res = await pgClient.query(query, values);
-      if (res.rows.length > 0) {
-        await redisClient.rPush('latest_blocks', JSON.stringify(res.rows[0]));
-        await redisClient.lTrim('latest_blocks', 0, 99); // Ensure there are only 100 elements
-      }
-    } catch (err) {
-      console.error('Error fetching new block from PostgreSQL', err);
-    }
-  }
-});
-
-pgClient.on('error', (err) => {
-  console.error('PostgreSQL client error', err);
-});
-
-redisClient.on('error', (err) => {
-  console.error('Redis client error', err);
-});
+main();
