@@ -18,7 +18,7 @@ interface Transaction {
 
 const TransactionDetailsByAddress = () => {
   const [transactionData, setTransactionData] = useState<any>(null);
-  const [balance, setBalance] = useState<string | null>(null);
+  const [balance, setBalance] = useState<string>("0.0 AGC");
   const [error, setError] = useState<string | null>(null);
   const pathname = usePathname();
   const address = pathname.split('/').pop();
@@ -93,11 +93,9 @@ const TransactionDetailsByAddress = () => {
         setError(null);
       } else {
         setError(data.message);
-        setBalance(null);
       }
     } catch (err) {
       setError('Balance not found or an error occurred.');
-      setBalance(null);
     }
   };
 
@@ -113,7 +111,7 @@ const TransactionDetailsByAddress = () => {
         <div className="mt-6">
           <div className="bg-white shadow-md rounded-lg p-4">
             <h2 className="text-lg sm:text-xl font-bold mb-4">Address Details</h2>
-            <h4 className="text-md sm:text-md font-medium mb-4">Balance: {balance ? balance : 'N/A'}</h4>
+            <h4 className="text-md sm:text-md font-medium mb-4">Balance: {balance }</h4>
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-200">
                 <thead>
