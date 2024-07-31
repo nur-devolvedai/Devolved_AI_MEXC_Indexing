@@ -58,7 +58,7 @@ const HomeSection: React.FC = () => {
   return (
     <div className="container mx-auto pt-6 lg:pt-20">
       {/* Top Section */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8 bg-white shadow-md rounded-lg p-4">
+      {/* <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8 bg-white shadow-md rounded-lg p-4">
         <div className="bg-white p-4 border-r border-gray-300">
           <h2 className="text-md text-gray-500 font-medium">MATIC Price</h2>
           <p className="text-sm text-[#D91A9C]">${maticPrice.toFixed(2)}</p>
@@ -75,7 +75,7 @@ const HomeSection: React.FC = () => {
           <h2 className="text-lg text-gray-500 font-medium">MATIC Market Cap</h2>
           <p className="text-sm text-[#D91A9C]">${maticMarketCap.toLocaleString()}</p>
         </div>
-      </div>
+      </div> */}
 
       {/* Latest Blocks and Transactions Sections */}
       <div className="flex flex-col md:flex-row justify-between space-y-8 md:space-y-0 md:space-x-8">

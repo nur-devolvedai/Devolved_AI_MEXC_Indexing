@@ -1,3 +1,26 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.top-section {
+    height: 100px;
+    background-color: black;
+  }
+  
+  .main-content {
+    flex: 1;
+    background-color: gray;
+  }
+
+  .search-section {
+    background-color: black;
+    padding: 5rem; /* Adjust padding as needed */
+    border-radius: 0.5rem; /* Optional: adds rounded corners */
+  }
+  .search-section-mobile {
+    background-color: black;
+    padding: 1rem; /* Adjust padding as needed */
+    border-radius: 0.5rem; /* Optional: adds rounded corners */
+  }
+  
