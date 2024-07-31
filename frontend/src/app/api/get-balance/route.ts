@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { ApiPromise, WsProvider } from "@polkadot/api";
-import { formatBalance } from "@polkadot/util";
 
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
   if (request.method !== "POST") {
@@ -39,11 +38,13 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
 
     // @ts-ignore
     const { data: balance } = await api.query.system.account(address);
-    const balanceFormatted = formatBalance(balance.free, {
-      decimals: 18,
-      withSi: true,
-      withUnit: "AGC",
-    });
+    const balanceValue = parseFloat(balance.free.toString()) / Math.pow(10, 18);
+
+    // Format balance to 4 decimal places and add commas
+    const balanceFormatted = balanceValue.toLocaleString(undefined, {
+      minimumFractionDigits: 4,
+      maximumFractionDigits: 4,
+    }) + " AGC";
 
     return NextResponse.json({
       success: true,
