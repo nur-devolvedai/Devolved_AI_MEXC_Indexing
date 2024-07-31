@@ -23,7 +23,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
       { status: 400 }
     );
   }
-  
+
   try {
     const { address } = await request.json();
 
@@ -45,7 +45,10 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
       withUnit: "AGC",
     });
 
-    return NextResponse.json({ balance: balanceFormatted }, { status: 200 });
+    return NextResponse.json({
+      success: true,
+      balance: balanceFormatted 
+    }, { status: 200 });
   } catch (error) {
     console.error("Error fetching balance:", error);
     let errorMessage = 'An unknown error occurred';
