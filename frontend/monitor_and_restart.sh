@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LOG_FILE="/home/tanvir/.pm2/logs/mexc-indexing-frontend-error.log"
+LOG_FILE="./logs/mexc_indexing_frontend-error.log"
 ERROR_KEYWORDS=("Invariant: Missing 'next-action' header" "Failed to find Server Action" "node:async_hooks")
 
 while true; do
