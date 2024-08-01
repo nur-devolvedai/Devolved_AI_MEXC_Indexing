@@ -4,9 +4,16 @@ import React, { useState, useEffect } from 'react';
 import ClipboardJS from 'clipboard';
 import { FiClipboard } from 'react-icons/fi';
 import { usePathname } from 'next/navigation';
+import dynamic from 'next/dynamic'; // Import dynamic for client-side rendering
+// Dynamically import the Player component for client-side rendering only
+const Player = dynamic(() => import('@lottiefiles/react-lottie-player').then(mod => mod.Player), {
+  ssr: false,
+});
+import LoadinJson from '../../../../public/block.json';
 
 const TransactionDetails = () => {
   const [transactionData, setTransactionData] = useState<any>(null);
+  const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const pathname = usePathname();
   const txnHash = pathname.split('/').pop(); 
@@ -41,6 +48,7 @@ const TransactionDetails = () => {
   }, [txnHash]);
 
   const fetchTransactionDetails = async (txHash: string) => {
+    setLoading(true);
     try {
       const response = await fetch('/api/transaction-by-hash', {
         method: 'POST',
@@ -63,12 +71,31 @@ const TransactionDetails = () => {
     } catch (err) {
       setError('Transaction not found or an error occurred.');
       setTransactionData(null);
+    } finally {
+      setLoading(false);
     }
   };
 
   const convertTo18Precision = (amount: string) => {
     return (parseFloat(amount) / 1e18).toFixed(18);
   };
+
+  if (loading) {
+    return (
+      <div className="p-4 bg-white text-gray-700 shadow">
+        <div className="flex justify-center items-center h-64">
+          <div className="loader">
+            <Player
+              autoplay
+              loop
+              src={LoadinJson} // Ensure you have this JSON file in your public directory or adjust the path accordingly
+              style={{ height: '150px', width: '150px' }}
+            />
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto p-4 sm:p-6 lg:p-8">

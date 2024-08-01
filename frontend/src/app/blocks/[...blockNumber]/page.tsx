@@ -3,6 +3,12 @@
 import React, { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import ClipboardJS from 'clipboard';
+import dynamic from 'next/dynamic'; // Import dynamic for client-side rendering
+// Dynamically import the Player component for client-side rendering only
+const Player = dynamic(() => import('@lottiefiles/react-lottie-player').then(mod => mod.Player), {
+  ssr: false,
+});
+import LoadinJson from '../../../../public/block.json';
 
 interface Block {
   block_number: string;
@@ -15,6 +21,7 @@ interface Block {
 
 const BlocksDetailsByBlockNumber = () => {
   const [blockData, setBlockData] = useState<Block | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const pathname = usePathname();
   const blockNumber = pathname.split('/').pop();
@@ -45,6 +52,7 @@ const BlocksDetailsByBlockNumber = () => {
   }, [blockNumber]);
 
   const fetchBlockDetails = async (blockNumber: string) => {
+    setLoading(true);
     try {
       const response = await fetch('/api/block-details-by-block-number', {
         method: 'POST',
@@ -68,8 +76,27 @@ const BlocksDetailsByBlockNumber = () => {
     } catch (err) {
       setError('Transaction not found or an error occurred.');
       setBlockData(null);
+    } finally {
+      setLoading(false);
     }
   };
+
+  if (loading) {
+    return (
+      <div className="p-4 bg-white text-gray-700 shadow">
+        <div className="flex justify-center items-center h-64">
+          <div className="loader">
+            <Player
+              autoplay
+              loop
+              src={LoadinJson} // Ensure you have this JSON file in your public directory or adjust the path accordingly
+              style={{ height: '150px', width: '150px' }}
+            />
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto p-4 sm:p-6 lg:p-8">
