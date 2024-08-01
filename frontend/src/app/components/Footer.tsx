@@ -21,7 +21,7 @@ const Footer: React.FC = () => {
               </samp>
             </Link>
             <p className="mt-4 text-sm">
-            Argochain Indexing is a Block Explorer and Analytics Platform for Argochain.
+            Argochain Scanner is a Block Explorer and Analytics Platform for Argochain.
             </p>
           </div>
 
