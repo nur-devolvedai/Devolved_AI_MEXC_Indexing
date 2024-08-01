@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connectToDatabase, pool } from '@/lib/dbConnect';
+import { getClient } from '@/lib/redisClient';
 
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
   if (request.method !== "POST") {
@@ -9,6 +10,17 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
         message: "Method not allowed!",
       },
       { status: 405 }
+    );
+  }
+
+  const nextActionHeader = request.headers.get("next-action");
+  if (!nextActionHeader) {
+    return NextResponse.json(
+      {
+        success: false,
+        message: "Missing 'next-action' header",
+      },
+      { status: 400 }
     );
   }
 
@@ -25,6 +37,23 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
   }
 
   try {
+    const redisClient = getClient();
+
+    // Try to fetch transaction from Redis
+    const redisData = await redisClient.get(txHash);
+
+    if (redisData) {
+      const transaction = JSON.parse(redisData);
+      return NextResponse.json(
+        {
+          success: true,
+          result: transaction,
+        },
+        { status: 200 }
+      );
+    }
+
+    // If not found in Redis, fetch from PostgreSQL
     await connectToDatabase();
 
     const query = `
@@ -45,19 +74,24 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
       );
     }
 
+    const transaction = result.rows[0];
+
+    // Save the transaction to Redis for future queries
+    await redisClient.set(txHash, JSON.stringify(transaction));
+
     return NextResponse.json(
       {
         success: true,
-        result: result.rows[0],
+        result: transaction,
       },
       { status: 200 }
     );
   } catch (error) {
-    console.error(error);
+    console.error("Error: ", error);
     return NextResponse.json(
       {
         success: false,
-        result: 'Internal server error'
+        result: "Internal server error",
       },
       { status: 500 }
     );
