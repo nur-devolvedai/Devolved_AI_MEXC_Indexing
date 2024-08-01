@@ -54,7 +54,7 @@ const TransactionDetailsByAddress = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'next-action': 'search-transaction'
+          'next-action': 'search-address'
         },
         body: JSON.stringify({ address })
       });
@@ -80,7 +80,7 @@ const TransactionDetailsByAddress = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'next-action': 'search-transaction'
+          'next-action': 'search-balance'
         },
         body: JSON.stringify({ address })
       });

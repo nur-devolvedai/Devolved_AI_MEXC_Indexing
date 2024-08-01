@@ -50,7 +50,7 @@ const BlocksDetailsByBlockNumber = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'next-action': 'search-transaction'
+          'next-action': 'search-block'
         },
         body: JSON.stringify({ blockNumber })
       });

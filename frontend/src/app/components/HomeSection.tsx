@@ -26,7 +26,7 @@ const HomeSection: React.FC = () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'next-action': 'search-transaction'
+        'next-action': 'search-latest-block'
       },
     })
     .then((response) => response.json())
@@ -43,7 +43,7 @@ const HomeSection: React.FC = () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'next-action': 'search-transaction'
+        'next-action': 'search-latest-transaction'
       },
     })
     .then((response) => response.json())
