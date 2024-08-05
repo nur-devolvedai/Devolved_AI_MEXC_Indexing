@@ -83,7 +83,7 @@ const HomeSection: React.FC = () => {
                   <tr key={index}>
                     <td className="px-5 py-7 bg-gray-100 text-xs sm:text-sm text-gray-500 h-4 w-4"><Image priority src={BlockImage} alt="block-icon" /></td>
                     <td className="px-4 py-6 text-xs sm:text-sm text-[#D91A9C]">
-                      <Link href={`/blocks/${block.block_number}`} className="text-[#D91A9C] hover:underline">
+                      <Link href={`/blocks/${block.block_number}`}  target="_blank" className="text-[#D91A9C] hover:underline">
                         {block.block_number}
                       </Link>
                     </td>
@@ -115,18 +115,18 @@ const HomeSection: React.FC = () => {
                   <tr key={index}>
                     <td className="px-5 py-7 bg-gray-100 text-xs sm:text-sm text-gray-500 h-4 w-4"><Image priority src={TransactionImage} alt="transaction-icon" /></td>
                     <td className="px-4 py-6 text-xs sm:text-sm text-[#D91A9C]">
-                    <Link href={`/transactions/${txn.tx_hash}`} className="text-[#D91A9C] hover:underline">
+                    <Link href={`/transactions/${txn.tx_hash}`}  target="_blank" className="text-[#D91A9C] hover:underline">
                       {shorten(txn.tx_hash)}
                     </Link>
                     </td>
                     <td className="px-4 py-6 text-xs sm:text-sm text-[#D91A9C]">{txn.age}</td>
                     <td className="px-4 py-6 text-xs sm:text-sm text-[#D91A9C]">
-                      <Link href={`/address/${txn.from_address}`} className="text-[#D91A9C] hover:underline">
+                      <Link href={`/address/${txn.from_address}`}  target="_blank" className="text-[#D91A9C] hover:underline">
                         {shorten(txn.from_address)}
                       </Link>
                     </td>
                     <td className="px-4 py-6 text-xs sm:text-sm text-[#D91A9C]">
-                      <Link href={`/address/${txn.to_address}`} className="text-[#D91A9C] hover:underline">
+                      <Link href={`/address/${txn.to_address}`}  target="_blank" className="text-[#D91A9C] hover:underline">
                         {shorten(txn.to_address)}
                       </Link>
                     </td>

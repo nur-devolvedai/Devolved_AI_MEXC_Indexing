@@ -29,7 +29,7 @@ export default function Home() {
   return (
     <main className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="container mx-auto p-4 sm:p-6 lg:p-8">
-        <div className="flex justify-left items-left mb-4 bg-gray-600 p-4 lg:p-28 rounded-md">
+        <div className="flex justify-left items-left mb-4 bg-gray-800 p-4 lg:p-28 rounded-md">
           <form onSubmit={handleSearch} className="w-full sm:w-auto flex items-center justify-center">
             <select
               value={filter}
